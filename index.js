@@ -10,17 +10,19 @@ var session = require("express-session");
 const bodyParser = require("body-parser");
 
 //httpsServer
-var privateKey = fs.readFileSync(
-  path.join(__dirname, "./cert/private.pem"),
-  "utf8"
-);
-var certificate = fs.readFileSync(
-  path.join(__dirname, "./cert/file.crt"),
-  "utf8"
-);
-var credentials = { key: privateKey, cert: certificate };
+if (process.env.NODE_ENV === "development") {
+  var privateKey = fs.readFileSync(
+    path.join(__dirname, "./cert/private.pem"),
+    "utf8"
+  );
+  var certificate = fs.readFileSync(
+    path.join(__dirname, "./cert/file.crt"),
+    "utf8"
+  );
+  var credentials = { key: privateKey, cert: certificate };
 
-var httpsServer = https.createServer(credentials, app);
+  var httpsServer = https.createServer(credentials, app);
+}
 //Mongo Connect
 mongoose.connect(keys.mongoURI);
 
@@ -46,6 +48,8 @@ require("./routes/authRoutes")(app);
 
 //start server
 const PORT = process.env.PORT || 5000;
-httpsServer.listen(PORT, function() {
-  console.log("HTTPS Server is running on https://localhost:%s", PORT);
-});
+if (process.env.NODE_ENV === "development")
+  httpsServer.listen(PORT, function() {
+    console.log("HTTPS Server is running on https://localhost:%s", PORT);
+  });
+else app.listen(PORT);
