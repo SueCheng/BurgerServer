@@ -102,6 +102,8 @@ module.exports = app => {
   });
 
   app.get("/auth/current_user", (req, res) => {
+    console.log("get current_user request");
     res.send(req.user);
   });
+  console.log("auth route added");
 };
