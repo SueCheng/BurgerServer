@@ -100,11 +100,6 @@ module.exports = app => {
       }
     });
   });
-  //for test
-  app.get("/", (req, res) => {
-    if (req.protocol === "https") res.status(200).send("hii https");
-    else res.status(200).send("hi http");
-  });
 
   app.get("/auth/current_user", (req, res) => {
     res.send(req.user);
