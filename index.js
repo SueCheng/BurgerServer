@@ -8,6 +8,7 @@ var https = require("https");
 const passport = require("passport");
 var session = require("express-session");
 const bodyParser = require("body-parser");
+const MongoStore = require("connect-mongo")(session);
 
 //httpsServer
 
@@ -39,7 +40,12 @@ app.use(
     secret: "cats",
     name: "sue_burger_cookie",
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    store: new MongoStore({
+      mongooseConnection: mongoose.connection,
+      ttl: 14 * 24 * 60 * 60,
+      autoRemove: "native"
+    })
   })
 );
 
