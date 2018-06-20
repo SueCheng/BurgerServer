@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const Order = require("../models/Order");
+const RestaurantAddress = require("../models/restaurantAddressSchema");
 const _ = require("lodash");
 const requireLogin = require("../middlewares/requireLogin");
 
@@ -113,5 +114,23 @@ module.exports = app => {
         next(new Error("can't find corresponding user"));
       }
     });
+  });
+
+  app.get("/data/restaurantlist/search", function(req, res) {
+    RestaurantAddress.find(
+      { address: { $regex: req.query.key, $options: "i" } },
+      "-_id address lat lng menu",
+      (err, addressList) => {
+        if (err) {
+          console.log("find the corresponding restaurantList error", err);
+          next(err);
+        } else if (addressList) {
+          res.send(addressList);
+        } else {
+          console.log("find no corresponding restaurant list");
+          next(new Error("find no corresponding restaurant list"));
+        }
+      }
+    );
   });
 };
