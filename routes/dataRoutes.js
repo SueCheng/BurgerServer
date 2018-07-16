@@ -13,7 +13,8 @@ module.exports = app => {
         console.log("find the corresponding user error", err);
         next(err);
       } else if (user) {
-        user.shoppingCart.push(req.body); //since itemschema include a map array, here save should use set ,need test
+        Array.prototype.push.apply(user.shoppingCart, req.body); //get array as parameter,merge two aray
+        //user.shoppingCart.push(req.body); //since itemschema include a map array, here save should use set ,need test
         user.save(err => {
           if (err) {
             console.log("save shoppingcart error", err);
