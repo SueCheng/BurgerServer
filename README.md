@@ -16,10 +16,14 @@ Full stack JavaScript app that lets users log in to customize burger and order p
 10. the GUI will display responsively on screen with different widths and height.
 11. Any error(GUI error,network error,system error etc)will get immediately clear hint on the current page or a modal dialog
 
+### animation of senario
+![alt unauthorizeduser](https://github.com/SueCheng/BurgerServer/blob/master/unauthorizeduser.gif)
+![alt authorizeduser](https://github.com/SueCheng/BurgerServer/blob/master/authorizeduser.gif)
+
 ### Technology Used:
 
 #### Client
-* Passport (Local/JWT/Facebook)
+* Passport (Local/Google/Facebook)
 * React
 * Redux
 * React-Redux
